@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="ETicaret.Business/ETicaret.Business.csproj" />
+  <Project Path="ETicaret.DataAccess/ETicaret.DataAccess.csproj" />
+  <Project Path="ETicaret.Entity/ETicaret.Entity.csproj" />
+  <Project Path="ETicaret.WebAPI/ETicaret.WebAPI.csproj" />
+  <Project Path="ETicaret.WebUI/ETicaret.WebUI.csproj" />
+</Solution>
