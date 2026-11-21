@@ -2,6 +2,7 @@ using ETicaret.DataAccess.Context;
 using ETicaret.Entity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ETicaret.DataAccess.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +14,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
 
-// Repository ve servis kayıtları: ilgili sınıfları yazınca açılacak
-// builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-// builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 
 var app = builder.Build();
 
