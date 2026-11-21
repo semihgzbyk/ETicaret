@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ETicaret.DataAccess.Repositories;
 using ETicaret.Business.Services;
+using ETicaret.DataAccess.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +30,7 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await context.Database.MigrateAsync(); // Bekleyen migration'ları uygular
-    // await DbInitializer.SeedAsync(scope.ServiceProvider); // Seed sınıfını yazınca açılacak
+    await DbInitializer.SeedAsync(scope.ServiceProvider);
 }
 
 if (!app.Environment.IsDevelopment())
