@@ -1,24 +1,30 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+using ETicaret.Business.Services;
 using ETicaret.WebUI.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ETicaret.WebUI.Controllers;
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly IProductService _productService;
+    private readonly ICategoryService _categoryService;
+
+    public HomeController(IProductService productService, ICategoryService categoryService)
     {
-        return View();
+        _productService = productService;
+        _categoryService = categoryService;
     }
 
-    public IActionResult Privacy()
+    public async Task<IActionResult> Index()
     {
-        return View();
-    }
+        var products = await _productService.GetAllAsync();
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        var model = new HomeViewModel
+        {
+            FeaturedProducts = products.Where(p => p.IsFeatured).ToList(),
+            Categories = await _categoryService.GetAllAsync()
+        };
+
+        return View(model);
     }
 }
