@@ -1,0 +1,52 @@
+@model ETicaret.WebUI.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Üye Ol";
+}
+
+<div class="container p-t-70 p-b-100">
+    <div class="row">
+        <div class="col-md-8 col-lg-5 m-lr-auto">
+            <div class="p-lr-40 p-t-40 p-b-40 p-lr-15-sm" style="border:1px solid #e6e6e6;">
+                <h4 class="mtext-109 cl2 p-b-30">Üye Ol</h4>
+
+                <form asp-action="Register" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger p-b-15"></div>
+
+                    <div class="p-b-15">
+                        <label class="stext-102 cl3" asp-for="FullName">Ad Soyad</label>
+                        <input class="size-111 bor8 stext-102 cl2 p-lr-20" asp-for="FullName" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+                    <div class="p-b-15">
+                        <label class="stext-102 cl3" asp-for="Email">E-posta</label>
+                        <input class="size-111 bor8 stext-102 cl2 p-lr-20" asp-for="Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="p-b-15">
+                        <label class="stext-102 cl3" asp-for="Password">Şifre</label>
+                        <input class="size-111 bor8 stext-102 cl2 p-lr-20" asp-for="Password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="p-b-25">
+                        <label class="stext-102 cl3" asp-for="ConfirmPassword">Şifre Tekrar</label>
+                        <input class="size-111 bor8 stext-102 cl2 p-lr-20" asp-for="ConfirmPassword" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="flex-c-m stext-101 cl0 bg1 bor1 hov-btn1 p-lr-15 trans-04"
+                            style="width:100%; height:46px;">
+                        Üye Ol
+                    </button>
+                </form>
+
+                <p class="stext-107 cl6 p-t-20 txt-center">
+                    Zaten üye misiniz?
+                    <a asp-action="Login" class="cl1 hov-cl1">Giriş yapın</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

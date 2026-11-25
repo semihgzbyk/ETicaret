@@ -1,0 +1,44 @@
+@model ETicaret.WebUI.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Giriş Yap";
+}
+
+<div class="container p-t-70 p-b-100">
+    <div class="row">
+        <div class="col-md-8 col-lg-5 m-lr-auto">
+            <div class="p-lr-40 p-t-40 p-b-40 p-lr-15-sm" style="border:1px solid #e6e6e6;">
+                <h4 class="mtext-109 cl2 p-b-30">Giriş Yap</h4>
+
+                <form asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger p-b-15"></div>
+
+                    <div class="p-b-15">
+                        <label class="stext-102 cl3" asp-for="Email">E-posta</label>
+                        <input class="size-111 bor8 stext-102 cl2 p-lr-20" asp-for="Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="p-b-15">
+                        <label class="stext-102 cl3" asp-for="Password">Şifre</label>
+                        <input class="size-111 bor8 stext-102 cl2 p-lr-20" asp-for="Password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="p-b-25 stext-102 cl3">
+                        <input type="checkbox" asp-for="RememberMe" /> Beni hatırla
+                    </div>
+
+                    <button type="submit" class="flex-c-m stext-101 cl0 bg1 bor1 hov-btn1 p-lr-15 trans-04"
+                            style="width:100%; height:46px;">
+                        Giriş Yap
+                    </button>
+                </form>
+
+                <p class="stext-107 cl6 p-t-20 txt-center">
+                    Hesabınız yok mu?
+                    <a asp-action="Register" class="cl1 hov-cl1">Üye olun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
