@@ -1,48 +1,168 @@
 ﻿@model ETicaret.WebUI.Models.HomeViewModel
 @{
     ViewData["Title"] = "Ana Sayfa";
+    var banners = Model.Categories.Take(3).ToList();
+    var featuredCategoryIds = Model.FeaturedProducts.Select(p => p.CategoryId).Distinct().ToList();
 }
 
-<div class="p-5 mb-4 bg-light rounded-3 text-center">
-    <h1 class="display-5 fw-bold">ETicaret'e Hoş Geldiniz</h1>
-    <p class="fs-5 text-muted">Binlerce ürün, uygun fiyatlar.</p>
-</div>
-
-<h4 class="mb-3">Kategoriler</h4>
-<div class="d-flex flex-wrap gap-2 mb-5">
-    @foreach (var category in Model.Categories)
-    {
-        <a class="btn btn-outline-primary" href="#">@category.Name</a>
-    }
-</div>
-
-<h4 class="mb-3">Öne Çıkan Ürünler</h4>
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-    @foreach (var product in Model.FeaturedProducts)
-    {
-        <div class="col">
-            <div class="card h-100 shadow-sm">
-                <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name"
-                     style="height:200px;object-fit:cover;">
-                <div class="card-body d-flex flex-column">
-                    <small class="text-muted">@product.Category?.Name · @product.Brand?.Name</small>
-                    <h6 class="card-title mt-1">@product.Name</h6>
-                    <div class="mt-auto">
-                        @if (product.DiscountPrice.HasValue)
-                        {
-                            <span class="text-muted text-decoration-line-through">@product.Price.ToString("N2") ₺</span>
-                            <span class="fw-bold text-danger ms-1">@product.DiscountPrice.Value.ToString("N2") ₺</span>
-                        }
-                        else
-                        {
-                            <span class="fw-bold">@product.Price.ToString("N2") ₺</span>
-                        }
+<!-- Slider -->
+<section class="section-slide">
+    <div class="wrap-slick1">
+        <div class="slick1">
+            <div class="item-slick1" style="background-image: url('/images/slide-01.jpg');">
+                <div class="container h-full">
+                    <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+                        <div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
+                            <span class="ltext-101 cl2 respon2">Yeni Sezon Teknoloji</span>
+                        </div>
+                        <div class="layer-slick1 animated visible-false" data-appear="fadeInUp" data-delay="800">
+                            <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">AKILLI TELEFONLAR</h2>
+                        </div>
+                        <div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
+                            <a asp-controller="Products" asp-action="Index"
+                               class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                                Alışverişe Başla
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="card-footer bg-white border-0">
-                    <a class="btn btn-primary w-100" href="#">İncele</a>
+            </div>
+
+            <div class="item-slick1" style="background-image: url('/images/slide-02.jpg');">
+                <div class="container h-full">
+                    <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+                        <div class="layer-slick1 animated visible-false" data-appear="rollIn" data-delay="0">
+                            <span class="ltext-101 cl2 respon2">Ses ve Görüntü</span>
+                        </div>
+                        <div class="layer-slick1 animated visible-false" data-appear="lightSpeedIn" data-delay="800">
+                            <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">KULAKLIK & TV</h2>
+                        </div>
+                        <div class="layer-slick1 animated visible-false" data-appear="slideInUp" data-delay="1600">
+                            <a asp-controller="Products" asp-action="Index"
+                               class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                                Alışverişe Başla
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item-slick1" style="background-image: url('/images/slide-03.jpg');">
+                <div class="container h-full">
+                    <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+                        <div class="layer-slick1 animated visible-false" data-appear="rotateInDownLeft" data-delay="0">
+                            <span class="ltext-101 cl2 respon2">Fırsat Ürünleri</span>
+                        </div>
+                        <div class="layer-slick1 animated visible-false" data-appear="rotateInUpRight" data-delay="800">
+                            <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">İNDİRİMLER</h2>
+                        </div>
+                        <div class="layer-slick1 animated visible-false" data-appear="rotateIn" data-delay="1600">
+                            <a asp-controller="Products" asp-action="Index"
+                               class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                                Alışverişe Başla
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    }
+    </div>
+</section>
+
+<!-- Banner: ilk 3 kategori -->
+<div class="sec-banner bg0 p-t-80 p-b-50">
+    <div class="container">
+        <div class="row">
+            @foreach (var c in banners)
+            {
+                <div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+                    <div class="block1 wrap-pic-w">
+                        <img src="@c.ImageUrl" alt="@c.Name">
+
+                        <a asp-controller="Products" asp-action="Index" asp-route-categoryId="@c.Id"
+                           class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+                            <div class="block1-txt-child1 flex-col-l">
+                                <span class="block1-name ltext-102 trans-04 p-b-8">@c.Name</span>
+                                <span class="block1-info stext-102 trans-04">Yeni ürünler</span>
+                            </div>
+
+                            <div class="block1-txt-child2 p-b-4 trans-05">
+                                <div class="block1-link stext-101 cl0 trans-09">Ürünleri İncele</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
+
+<!-- Öne çıkan ürünler -->
+<section class="bg0 p-t-23 p-b-140">
+    <div class="container">
+        <div class="p-b-10">
+            <h3 class="ltext-103 cl5">Öne Çıkan Ürünler</h3>
+        </div>
+
+        <div class="flex-w flex-sb-m p-b-52">
+            <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+                <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+                    Tümü
+                </button>
+
+                @foreach (var c in Model.Categories.Where(c => featuredCategoryIds.Contains(c.Id)))
+                {
+                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".cat-@c.Id">
+                        @c.Name
+                    </button>
+                }
+            </div>
+        </div>
+
+        <div class="row isotope-grid">
+            @foreach (var p in Model.FeaturedProducts)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item cat-@p.CategoryId">
+                    <div class="block2">
+                        <div class="block2-pic hov-img0">
+                            <img src="@p.ImageUrl" alt="@p.Name">
+
+                            <a href="#" data-product-id="@p.Id"
+                               class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-add-to-cart">
+                                Sepete Ekle
+                            </a>
+                        </div>
+
+                        <div class="block2-txt flex-w flex-t p-t-14">
+                            <div class="block2-txt-child1 flex-col-l">
+                                <a asp-controller="Products" asp-action="Details" asp-route-id="@p.Id"
+                                   class="stext-104 cl4 hov-cl1 trans-04 p-b-6">
+                                    @p.Name
+                                </a>
+
+                                <span class="stext-105 cl3">
+                                    @if (p.DiscountPrice.HasValue)
+                                    {
+                                        <del class="m-r-5">@p.Price.ToString("N2") ₺</del>
+                                        <strong class="cl1">@p.DiscountPrice.Value.ToString("N2") ₺</strong>
+                                    }
+                                    else
+                                    {
+                                        @:@p.Price.ToString("N2") ₺
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="flex-c-m flex-w w-full p-t-45">
+            <a asp-controller="Products" asp-action="Index"
+               class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+                Tüm Ürünler
+            </a>
+        </div>
+    </div>
+</section>
