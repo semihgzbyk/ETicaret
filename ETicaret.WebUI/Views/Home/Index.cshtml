@@ -125,7 +125,9 @@
                 <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item cat-@p.CategoryId">
                     <div class="block2">
                         <div class="block2-pic hov-img0">
-                            <img src="@p.ImageUrl" alt="@p.Name">
+                            <a asp-controller="Products" asp-action="Details" asp-route-id="@p.Id" class="dis-block">
+                                <img src="@p.ImageUrl" alt="@p.Name">
+                            </a>
 
                             <a href="#" data-product-id="@p.Id"
                                class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-add-to-cart">

@@ -12,15 +12,18 @@ public class ProductsController : Controller
 
     private readonly IProductService _productService;
     private readonly ICategoryService _categoryService;
+    private readonly IProductRepository _productRepository;
     private readonly IRepository<Brand> _brandRepository;
 
     public ProductsController(
         IProductService productService,
         ICategoryService categoryService,
+        IProductRepository productRepository,
         IRepository<Brand> brandRepository)
     {
         _productService = productService;
         _categoryService = categoryService;
+        _productRepository = productRepository;
         _brandRepository = brandRepository;
     }
 
@@ -50,5 +53,23 @@ public class ProductsController : Controller
         };
 
         return View(model);
+    }
+
+    public async Task<IActionResult> Details(int id)
+    {
+        var product = await _productRepository.GetByIdWithDetailsAsync(id);
+        if (product is null) return NotFound();
+
+        var related = (await _productService
+                .GetFilteredAsync(product.CategoryId, null, null, null, null))
+            .Where(p => p.Id != id)
+            .Take(8)
+            .ToList();
+
+        return View(new ProductDetailViewModel
+        {
+            Product = product,
+            RelatedProducts = related
+        });
     }
 }
